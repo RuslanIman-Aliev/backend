@@ -1,0 +1,201 @@
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.csproj.AssemblyReference.cache
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.AssemblyInfoInputs.cache
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.AssemblyInfo.cs
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.csproj.CoreCompileInputs.cache
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.RazorAssemblyInfo.cache
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.RazorAssemblyInfo.cs
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\appsettings.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.staticwebassets.runtime.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.staticwebassets.endpoints.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.exe
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.deps.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.runtimeconfig.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Examin backend.pdb
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Azure.Core.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Azure.Identity.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Humanizer.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.Data.SqlClient.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.Identity.Client.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.SqlServer.Server.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.CodeDom.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Drawing.Common.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Memory.Data.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Runtime.Caching.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Security.Permissions.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.Windows.Extensions.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\scopedcss\bundle\Examin backend.styles.css
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\59azwu7lro-b9sayid5wm.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\4u7ml01jn1-61n19gt1b8.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\e31qe2u44j-xtxxf3hu2r.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\h79mgx3n3l-bqjiyaj88i.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\au227m4ez7-c2jlpeoesf.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\9r0ossbbke-erw9l3u2r3.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\p80k3ph047-aexeepp0ev.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\zd7wj2p6yh-d7shbmvgxk.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\70wuy0cnxz-ausgxo2sd3.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\diqn4xind5-k8d9w2qqmf.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\fp8ncya9e0-cosvhxvwiu.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\62ipeejdaw-ub07r2b239.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\z60pglxdww-fvhpjtyr6v.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\aovlgt966k-b7pk76d08c.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\jbcqhpqmt1-fsbi9cje9m.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\khbtr05p5c-rzd6atqjts.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\02ioe7hs15-ee0r1s7dh0.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\mq65uemv9l-dxx9fxp4il.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\78t71diwn8-jd9uben2k1.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\af1ntjzur9-khv3u5hwcm.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\hfyxx6wvd7-r4e9w2rdcm.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\k5l55ou3i0-lcd1t2u6c8.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\6y58eeclfa-c2oey78nd0.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\0yjvvp0ivr-tdbxkamptv.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\htrwgtypx6-j5mq2jizvt.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\qlh7hgk9wy-06098lyss8.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\kkjqpznqoo-nvvlpmu67g.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\c3zawxpig9-s35ty4nyc5.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\f9lg5xevdf-pj5nd1wqec.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\q6vppsruxh-46ein0sx1k.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\nd9q1kmsfp-v0zj4ognzu.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\hzqvovape8-37tfw0ft22.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\yqvlshpwzz-hrwsygsryq.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\ltkx63chcn-pk9g2wxc8p.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\xtthotllni-ft3s53vfgj.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\98om7zfno7-6cfz1n2cew.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\uyryunpjdf-6pdc2jztkx.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\lnedx6vbop-493y06b0oq.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\uvum2wmw3k-iovd86k7lj.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\s54k5rly7f-vr1egmr9el.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\p15096dd4w-kbrnm935zg.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\s4qi30qwj1-jj8uyg4cgr.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\677ddd7se0-y7v9cxd14o.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\fb9umfnrx9-notf2xhcfb.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\vmkh66dfi2-h1s4sie4z3.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\8wqwseox6z-63fj8s7r0e.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\sjh3trxhw7-0j3bgjxly4.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\vgs280gd75-47otxtyo56.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\44e45zp7p1-4v8eqarkd7.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\0qpdlusony-356vix0kms.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\b189upp74l-83jwlth58m.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\t2p9ilopoc-mrlpezrjn3.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\36fo6cou08-lzl9nlhx6b.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\nx46kx1xqk-ag7o75518u.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\9nhfcz5vhw-x0q3zqp4vz.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\rz3jsoi4kp-0i3buxo5is.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\wk4krpxof3-o1o13a6vjx.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\w85pmrff7a-ttgo8qnofa.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\rx0xx0osci-2z0ns9nrw6.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\j8ybutpe20-muycvpuwrr.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\0z4bleh2br-87fc7y1x7t.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\compressed\pf8wil5elb-mlv21k5csn.gz
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets\msbuild.Examin backend.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets\msbuild.Examin backend.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets\msbuild.build.Examin backend.props
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Examin backend.props
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Examin backend.props
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.pack.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin b.D13E29AF.Up2Date
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\refint\Examin backend.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.pdb
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.genruntimeconfig.cache
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\ref\Examin backend.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
