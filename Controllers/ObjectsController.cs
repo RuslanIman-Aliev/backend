@@ -146,14 +146,15 @@ namespace Examin_backend.Controllers
             return Ok(result);
         }
         [HttpGet("getlistobjects")]
-        //можно и без даты и людей
         public async Task<IActionResult> GetListObjects(string city, DateOnly? dateIn, DateOnly? dateOut, int? guestCount)
         {
             var query = bookingContext.LivingObjects
                 .Include(o => o.ObjectAddresses)
                 .Include(o => o.Special)
                 .Include(o => o.Reviews)
+                .Include(o => o.Images) 
                 .Where(o => o.ObjectAddresses.Any(address => address.City == city));
+
             if (guestCount.HasValue)
             {
                 query = query.Where(o => o.Specials.Any(count => count.MaxPeopleCapacity >= guestCount));
@@ -181,11 +182,12 @@ namespace Examin_backend.Controllers
                         a.City,
                         a.Country,
                         a.PostalCode,
+                        a.Street,
                     }).FirstOrDefault(),
                     Availability = o.Availabilities.Select(av => new
                     {
-                       av.DateIn,
-                       av.DateOut
+                        av.DateIn,
+                        av.DateOut
                     }).ToList(),
                     Special = o.Special != null ? new
                     {
@@ -193,6 +195,7 @@ namespace Examin_backend.Controllers
                         o.Special.ToiletCount,
                         o.Special.RoomCount,
                     } : null,
+                    Photos = o.Images.Select(img => img.ImageUrl).ToList()  
                 }).ToListAsync();
 
             if (result == null || !result.Any())
