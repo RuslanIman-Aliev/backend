@@ -127,7 +127,8 @@ namespace Examin_backend.Controllers
                     {
                         a.Street,
                         a.City,
-                        a.PostalCode
+                        a.PostalCode,
+                        a.Country
                     }).FirstOrDefault(),
                     Special = o.Special != null ? new
                     {
