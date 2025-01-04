@@ -1,4 +1,6 @@
 ﻿using Examin_backend.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -42,39 +44,57 @@ namespace Examin_backend.Controllers
             try
             {
                 var existingUser = await _context.Users
-               .FirstOrDefaultAsync(u => u.Email == user.Email || u.Login == user.Login);
+                    .FirstOrDefaultAsync(u => u.Email == user.Email || u.Login == user.Login);
 
                 if (existingUser == null || existingUser.Password != user.Password)
                 {
-                    return Conflict("Invalid login or password");
+                    return Conflict(new { message = "Invalid login or password" });
                 }
 
-                // Generate tokens
                 var accessToken = GenerateJwtToken(existingUser);
                 var refreshToken = GenerateRefreshToken();
 
-                // Save refresh token to database
                 existingUser.RefreshToken = refreshToken;
                 existingUser.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
                 await _context.SaveChangesAsync();
-                return Ok(new
+
+                Response.Cookies.Append("AccessToken", accessToken, new CookieOptions
                 {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddMinutes(45)
                 });
+
+                Response.Cookies.Append("RefreshToken", refreshToken, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddDays(7)
+                });
+
+                return Ok(new { message = "Login successful!" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                Console.WriteLine($"Error during login: {ex.Message}");
+                return StatusCode(500, new { message = "Internal Server Error", details = ex.Message });
             }
-           
-
-           
         }
 
+ 
         [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken([FromBody] string refreshToken)
+        public async Task<IActionResult> RefreshToken()
         {
+            if (!Request.Cookies.TryGetValue("RefreshToken", out var refreshToken))
+
+            {
+                Console.WriteLine("Refresh no");
+
+                return Unauthorized("Refresh token not found");
+            }
+
             var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 
             if (user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
@@ -89,12 +109,52 @@ namespace Examin_backend.Controllers
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             await _context.SaveChangesAsync();
 
-            return Ok(new
+            Response.Cookies.Append("AccessToken", newAccessToken, new CookieOptions
             {
-                AccessToken = newAccessToken,
-                RefreshToken = newRefreshToken
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,  
+                Expires = DateTime.UtcNow.AddMinutes(45)
             });
+
+            Response.Cookies.Append("RefreshToken", newRefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None, 
+                Expires = DateTime.UtcNow.AddDays(7)
+            });
+
+
+            return Ok("Tokens refreshed successfully!");
         }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("AccessToken");
+            Response.Cookies.Delete("RefreshToken");
+
+            return Ok("Logged out successfully");
+        }
+        [EnableCors("AllowSpecificOrigin")]
+        [HttpGet("check-auth")]
+        public IActionResult CheckAuth()
+
+        {
+            Console.WriteLine(Request.Cookies["AccessToken"]);
+            if (Request.Cookies.ContainsKey("AccessToken"))
+            {
+                Console.WriteLine("Check");
+                return Ok("User is authenticated");
+                
+            }
+            Console.WriteLine("NoCheck");
+
+            return Unauthorized("Access token not found or invalid");
+        }
+
+
 
         private string GenerateJwtToken(User user)
         {
@@ -177,6 +237,38 @@ namespace Examin_backend.Controllers
             var bookings = user.BookingUsers.Select(u=>u).ToList();
             return Ok(bookings);
         }
+        [HttpGet("me")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            if (User?.Identity?.IsAuthenticated != true)
+            {
+                return Unauthorized("User is not authenticated");
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Invalid token");
+            }
+
+            var user = await _context.Users.FindAsync(int.Parse(userId));
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok(new
+            {
+                user.Id,
+                user.Login,
+                user.Email,
+                user.Surname,
+                user.Name,
+                user.WalletAddress,
+            });
+        }
+
+
     }
 
 }

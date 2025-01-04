@@ -144,6 +144,16 @@
   },
   {
     "ContainingType": "Examin_backend.Controllers.UserController",
+    "Method": "CheckAuth",
+    "RelativePath": "api/User/check-auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.UserController",
     "Method": "GetUserBookings",
     "RelativePath": "api/User/GetUserBookings",
     "HttpMethod": "GET",
@@ -224,18 +234,32 @@
   },
   {
     "ContainingType": "Examin_backend.Controllers.UserController",
+    "Method": "Logout",
+    "RelativePath": "api/User/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.UserController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "api/User/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.UserController",
     "Method": "RefreshToken",
     "RelativePath": "api/User/refresh-token",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "refreshToken",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
