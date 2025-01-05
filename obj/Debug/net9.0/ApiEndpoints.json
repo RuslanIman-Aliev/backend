@@ -45,6 +45,22 @@
   },
   {
     "ContainingType": "Examin_backend.Controllers.ObjectsController",
+    "Method": "CreateBooking",
+    "RelativePath": "api/Objects/book",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Examin_backend.Class.BookingDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.ObjectsController",
     "Method": "GetListObjects",
     "RelativePath": "api/Objects/getlistobjects",
     "HttpMethod": "GET",

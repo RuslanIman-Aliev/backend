@@ -84,10 +84,6 @@ public partial class BookingDbContext : DbContext
 
             entity.Property(e => e.ObjectType).HasMaxLength(50);
 
-            entity.HasOne(d => d.Availability).WithMany(p => p.Bookings)
-                .HasForeignKey(d => d.AvailabilityId)
-                .HasConstraintName("FK_Booking_AvailabilityId");
-
             entity.HasOne(d => d.Object).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.ObjectId)
                 .HasConstraintName("FK_Booking_ObjectId");
@@ -296,6 +292,12 @@ public partial class BookingDbContext : DbContext
         modelBuilder.Entity<Payment>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Payments__3214EC07618926DF");
+
+            entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+
+            entity.HasOne(d => d.Booking).WithMany(p => p.Payments)
+                .HasForeignKey(d => d.BookingId)
+                .HasConstraintName("FK_Payment_Booking");
 
             entity.HasOne(d => d.FromUser).WithMany(p => p.PaymentFromUsers)
                 .HasForeignKey(d => d.FromUserId)

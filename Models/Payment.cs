@@ -15,6 +15,12 @@ public partial class Payment
 
     public string? PaymentTransaction { get; set; }
 
+    public string? PaymentMethod { get; set; }
+
+    public int? BookingId { get; set; }
+
+    public virtual Booking? Booking { get; set; }
+
     public virtual User? FromUser { get; set; }
 
     public virtual LivingObject? Object { get; set; }

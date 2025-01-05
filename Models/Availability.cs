@@ -21,8 +21,6 @@ public partial class Availability
 
     public TimeOnly? TimeOut { get; set; }
 
-    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
-
     public virtual ICollection<LivingObject> LivingObjects { get; set; } = new List<LivingObject>();
 
     public virtual LivingObject? Object { get; set; }

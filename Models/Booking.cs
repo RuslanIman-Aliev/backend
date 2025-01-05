@@ -13,8 +13,6 @@ public partial class Booking
 
     public int? OwnerId { get; set; }
 
-    public int? AvailabilityId { get; set; }
-
     public string? ObjectType { get; set; }
 
     public DateOnly? DateIn { get; set; }
@@ -31,13 +29,15 @@ public partial class Booking
 
     public double? TotalPayingSum { get; set; }
 
-    public virtual Availability? Availability { get; set; }
+    public int? Guests { get; set; }
 
     public virtual ICollection<LivingObject> LivingObjects { get; set; } = new List<LivingObject>();
 
     public virtual LivingObject? Object { get; set; }
 
     public virtual User? Owner { get; set; }
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual User? User { get; set; }
 }

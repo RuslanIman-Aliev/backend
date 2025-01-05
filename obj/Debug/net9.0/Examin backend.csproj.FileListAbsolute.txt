@@ -198,5 +198,5 @@ C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Exami
 C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.genruntimeconfig.cache
 C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\ref\Examin backend.dll
 C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.sourcelink.json
+C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

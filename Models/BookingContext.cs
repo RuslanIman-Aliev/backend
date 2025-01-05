@@ -84,9 +84,9 @@ public partial class BookingContext : DbContext
 
             entity.Property(e => e.ObjectType).HasMaxLength(50);
 
-            entity.HasOne(d => d.Availability).WithMany(p => p.Bookings)
-                .HasForeignKey(d => d.AvailabilityId)
-                .HasConstraintName("FK_Booking_AvailabilityId");
+            //entity.HasOne(d => d.Availability).WithMany(p => p.Bookings)
+            //    .HasForeignKey(d => d.AvailabilityId)
+            //    .HasConstraintName("FK_Booking_AvailabilityId");
 
             entity.HasOne(d => d.Object).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.ObjectId)

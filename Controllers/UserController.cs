@@ -142,16 +142,34 @@ namespace Examin_backend.Controllers
         public IActionResult CheckAuth()
 
         {
-            Console.WriteLine(Request.Cookies["AccessToken"]);
-            if (Request.Cookies.ContainsKey("AccessToken"))
+            var token = Request.Cookies["AccessToken"];
+            if (string.IsNullOrEmpty(token))
             {
-                Console.WriteLine("Check");
-                return Ok("User is authenticated");
-                
+                return Unauthorized("Access token not found");
             }
-            Console.WriteLine("NoCheck");
 
-            return Unauthorized("Access token not found or invalid");
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidAudience = _configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]))
+            };
+
+            try
+            {
+                tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                return Ok("User is authenticated");
+            }
+            catch (Exception)
+            {
+                return Unauthorized("Invalid token");
+            }
+
         }
 
 
@@ -240,10 +258,10 @@ namespace Examin_backend.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser()
         {
-            if (User?.Identity?.IsAuthenticated != true)
-            {
-                return Unauthorized("User is not authenticated");
-            }
+            //if (User?.Identity?.IsAuthenticated != true)
+            //{
+            //    return Unauthorized("User is not authenticated");
+            //}
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))

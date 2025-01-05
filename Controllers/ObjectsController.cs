@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using Examin_backend.Class;
 
 namespace Examin_backend.Controllers
 {
@@ -110,6 +111,8 @@ namespace Examin_backend.Controllers
                 .Include(o => o.Reviews)
                 .Include(o => o.ObjectAddresses)
                 .Include(o => o.Special)
+                .Include(o => o.Availabilities)
+                .Include(o => o.Bookings)
                 .Where(o => o.Id == id)
                 .Select(o => new
                 {
@@ -119,6 +122,7 @@ namespace Examin_backend.Controllers
                     o.Square,
                     o.Name,
                     o.Description,
+                    o.OwnerId,
                     Reviews = o.Reviews != null ? new
                     {
                         o.Reviews.StarsCount,
@@ -130,12 +134,22 @@ namespace Examin_backend.Controllers
                         a.PostalCode,
                         a.Country
                     }).FirstOrDefault(),
+                    Book = o.Bookings.Select(b => new
+                    {
+                        b.DateIn,
+                        b.DateOut
+                    }).ToList(),
                     Special = o.Special != null ? new
                     {
                         o.Special.RoomCount,
                         o.Special.TotalCapacity,
                         o.Special.ToiletCount
-                    } : null
+                    } : null,
+                    Availb = o.Availabilities.Select(av=> new
+                    {
+                        av.DateIn,
+                        av.DateOut,
+                    }).ToList(),
                 })
                 .FirstOrDefaultAsync();
 
@@ -162,6 +176,7 @@ namespace Examin_backend.Controllers
             }
 
             if (dateIn.HasValue && dateOut.HasValue)
+                //добавить еще проверку на бронирование
             {
                 query = query.Where(o => o.Availabilities.Any(available => available.DateIn <= dateIn && available.DateOut >= dateOut));
             }
@@ -219,6 +234,56 @@ namespace Examin_backend.Controllers
             return Content(jsonResponse, "application/json");
             
         }
+        [HttpPost("book")]
+        public async Task<IActionResult> CreateBooking([FromBody] BookingDto data)
+        {
+            try
+            {
+                var existingBooking = await bookingContext.Bookings
+                    .Where(b => b.ObjectId == data.ObjectId &&
+                                b.UserId == data.UserId &&
+                                b.OwnerId == data.OwnerId &&
+                                b.ObjectType == data.ObjectType &&
+                                b.DateIn == DateOnly.Parse(data.DateIn) &&
+                                b.DateOut == DateOnly.Parse(data.DateOut) &&
+                                b.TotalPayingSum == data.TotalSum &&
+                                b.TotalDayCount == data.Days &&
+                                b.TotalNightCount == data.Night &&
+                                b.Guests == data.Guest)
+                    .FirstOrDefaultAsync();
+
+                if (existingBooking != null)
+                {
+                    return Ok( "This booking already exists with the same details." );
+                }
+
+                var booking = new Booking
+                {
+                    ObjectId = data.ObjectId,
+                    UserId = data.UserId,
+                    OwnerId = data.OwnerId,
+                    ObjectType = data.ObjectType,
+                    DateIn = DateOnly.Parse(data.DateIn),
+                    DateOut = DateOnly.Parse(data.DateOut),
+                    TotalPayingSum = data.TotalSum,
+                    TotalDayCount = data.Days,
+                    TotalNightCount = data.Night,
+                    Guests = data.Guest
+                };
+
+                bookingContext.Bookings.Add(booking);
+                await bookingContext.SaveChangesAsync();
+
+                return Ok(new { Message = "Booking created successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+
+
 
     }
 }
