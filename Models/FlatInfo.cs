@@ -11,8 +11,6 @@ public partial class FlatInfo
 
     public string? ObjectType { get; set; }
 
-    public bool? IsEatInclude { get; set; }
-
     public bool? IsBalcon { get; set; }
 
     public string? DoorCode { get; set; }

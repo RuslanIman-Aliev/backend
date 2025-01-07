@@ -85,7 +85,7 @@ namespace Examin_backend.Controllers
                Special = o.Special != null ? new
                {
                    o.Special.RoomCount,
-                   o.Special.TotalCapacity,
+                   o.Special.MaxPeopleCapacity,
                    o.Special.ToiletCount
                } : null
            })
@@ -142,7 +142,7 @@ namespace Examin_backend.Controllers
                     Special = o.Special != null ? new
                     {
                         o.Special.RoomCount,
-                        o.Special.TotalCapacity,
+                        o.Special.MaxPeopleCapacity,
                         o.Special.ToiletCount
                     } : null,
                     Availb = o.Availabilities.Select(av=> new

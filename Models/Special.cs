@@ -25,8 +25,6 @@ public partial class Special
 
     public int? TotalSquare { get; set; }
 
-    public int? TotalCapacity { get; set; }
-
     public string? RoomType { get; set; }
 
     public virtual ObjectAddress? Address { get; set; }

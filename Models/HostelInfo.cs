@@ -11,8 +11,6 @@ public partial class HostelInfo
 
     public string? ObjectType { get; set; }
 
-    public bool? IsEatInclude { get; set; }
-
     public int? PeopleInRoom { get; set; }
 
     public string? ForWho { get; set; }
