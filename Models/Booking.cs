@@ -7,13 +7,9 @@ public partial class Booking
 {
     public int Id { get; set; }
 
-    public int? ObjectId { get; set; }
-
     public int? UserId { get; set; }
 
     public int? OwnerId { get; set; }
-
-    public string? ObjectType { get; set; }
 
     public DateOnly? DateIn { get; set; }
 
@@ -31,7 +27,7 @@ public partial class Booking
 
     public int? Guests { get; set; }
 
-    public virtual ICollection<LivingObject> LivingObjects { get; set; } = new List<LivingObject>();
+    public int? ObjectId { get; set; }
 
     public virtual LivingObject? Object { get; set; }
 

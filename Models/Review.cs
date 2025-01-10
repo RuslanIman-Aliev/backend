@@ -9,8 +9,6 @@ public partial class Review
 
     public int? UserId { get; set; }
 
-    public int? ObjectId { get; set; }
-
     public string? ObjectType { get; set; }
 
     public string? Text { get; set; }
@@ -19,7 +17,7 @@ public partial class Review
 
     public bool? IsUserBookedObj { get; set; }
 
-    public virtual ICollection<LivingObject> LivingObjects { get; set; } = new List<LivingObject>();
+    public int? ObjectId { get; set; }
 
     public virtual LivingObject? Object { get; set; }
 

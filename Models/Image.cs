@@ -13,7 +13,5 @@ public partial class Image
 
     public string? ImageUrl { get; set; }
 
-    public virtual ICollection<LivingObject> LivingObjects { get; set; } = new List<LivingObject>();
-
     public virtual LivingObject? Object { get; set; }
 }

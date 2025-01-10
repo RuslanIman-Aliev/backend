@@ -200,3 +200,7 @@ C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\ref\E
 C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\Examin backend.sourcelink.json
 C:\Users\s0970\source\repos\Examin backend\Examin backend\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Azure.Storage.Blobs.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\Azure.Storage.Common.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.ClientModel.dll
+C:\Users\s0970\source\repos\Examin backend\Examin backend\bin\Debug\net9.0\System.IO.Hashing.dll

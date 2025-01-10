@@ -7,10 +7,6 @@ public partial class HouseInfo
 {
     public int Id { get; set; }
 
-    public int? ObjectId { get; set; }
-
-    public string? ObjectType { get; set; }
-
     public bool? IsPoolInclude { get; set; }
 
     public bool? IsGarage { get; set; }
@@ -19,7 +15,7 @@ public partial class HouseInfo
 
     public int? FloatCount { get; set; }
 
-    public virtual ICollection<LivingObject> LivingObjects { get; set; } = new List<LivingObject>();
+    public int? ObjectId { get; set; }
 
     public virtual LivingObject? Object { get; set; }
 }

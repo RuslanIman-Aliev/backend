@@ -6,6 +6,10 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Examin_backend.Class;
+using Azure.Core.GeoJson;
+using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
+using Azure.Storage;
 
 namespace Examin_backend.Controllers
 {
@@ -34,16 +38,16 @@ namespace Examin_backend.Controllers
             switch (name?.ToLower())
             {
                 case "flat":
-                    query = query.Include(o => o.Flat).Where(o => o.Flat != null);
+                    query = query.Include(o => o.FlatInfos).Where(o => o.FlatInfos != null);
                     break;
                 case "house":
-                    query = query.Include(o => o.House).Where(o => o.House != null);
+                    query = query.Include(o => o.HouseInfos).Where(o => o.HouseInfos != null);
                     break;
                 case "hotel":
-                    query = query.Include(o => o.Hotel).Where(o => o.Hotel != null);
+                    query = query.Include(o => o.HotelInfos).Where(o => o.HotelInfos != null);
                     break;
                 case "hostel":
-                    query = query.Include(o => o.Hostel).Where(o => o.Hostel != null);
+                    query = query.Include(o => o.HostelInfos).Where(o => o.HostelInfos != null);
                     break;
                 default:
                     return BadRequest("Invalid object type.");
@@ -62,41 +66,47 @@ namespace Examin_backend.Controllers
         public async Task<IActionResult> ShowAllTypeByRating()
         {
             var results = await bookingContext.LivingObjects
-           .Include(o => o.Reviews)
-           .Include(b => b.ObjectAddresses)
-           .Include(r => r.Special)
-           .OrderByDescending(o => o.Reviews.StarsCount)
-           .Select(o => new
-           {
-               o.Id,
-               o.ObjectType,
-               o.Price,
-               o.Square,
-               Reviews = o.Reviews != null ? new
-               {
-                   o.Reviews.StarsCount,
-               } : null,
-               Address = o.ObjectAddresses != null ? o.ObjectAddresses.Select(address => new
-               {
-                   address.Street,
-                   address.City,
-                   address.PostalCode
-               }).FirstOrDefault() : null,
-               Special = o.Special != null ? new
-               {
-                   o.Special.RoomCount,
-                   o.Special.MaxPeopleCapacity,
-                   o.Special.ToiletCount
-               } : null
-           })
-           .ToListAsync();
+                .Include(o => o.Reviews)
+                .Include(o => o.Special)
+                .Include(o => o.Address)
+                .Include(o => o.Images)
+
+                .OrderByDescending(o => o.Reviews.Any() ? o.Reviews.Average(re => re.StarsCount) : 0)
+                .Select(o => new
+                {
+                    o.Id,
+                    o.ObjectType,
+                    o.Price,
+                    o.Square,
+                    Reviews = o.Reviews.Select(re => new
+                    {
+                        re.StarsCount,
+                    }),
+                    Address = o.Address != null ? new
+                    {
+                        o.Address.Street,
+                        o.Address.City,
+                        o.Address.PostalCode
+                    } : null,
+                    Special = o.Special != null ? new
+                    {
+                        o.Special.RoomCount,
+                        o.Special.MaxPeopleCapacity,
+                        o.Special.ToiletCount
+                    } : null,
+                    Photos = o.Images.Select(img => img.ImageUrl).ToList()
+                })
+                .ToListAsync();
+
             if (results == null || !results.Any())
             {
-                return NotFound($"No objects found ");
+                return NotFound("No objects found");
             }
 
             return Ok(results);
         }
+
+
         [HttpGet("photo/{id}")]
         public async Task<IActionResult> GetPhotoObjectById(int id)
         {
@@ -109,47 +119,48 @@ namespace Examin_backend.Controllers
         {
             var result = await bookingContext.LivingObjects
                 .Include(o => o.Reviews)
-                .Include(o => o.ObjectAddresses)
+                .Include(o => o.Address)
                 .Include(o => o.Special)
-                .Include(o => o.Availabilities)
-                .Include(o => o.Bookings)
+                .Include(o => o.Availabilities)   
+                .Include(o => o.Bookings)      
                 .Where(o => o.Id == id)
                 .Select(o => new
                 {
                     o.Id,
                     o.ObjectType,
                     o.Price,
-                    o.Square,
                     o.Name,
                     o.Description,
                     o.OwnerId,
-                    Reviews = o.Reviews != null ? new
+                    Reviews = o.Reviews.Select(re => new
                     {
-                        o.Reviews.StarsCount,
+                        re.StarsCount,
+                    }),
+                    Address = o.Address != null ? new
+                    {
+                        o.Address.Street,
+                        o.Address.City,
+                        o.Address.PostalCode,
+                        o.Address.Country,
                     } : null,
-                    Address = o.ObjectAddresses.Select(a => new
-                    {
-                        a.Street,
-                        a.City,
-                        a.PostalCode,
-                        a.Country
-                    }).FirstOrDefault(),
-                    Book = o.Bookings.Select(b => new
-                    {
-                        b.DateIn,
-                        b.DateOut
-                    }).ToList(),
                     Special = o.Special != null ? new
                     {
                         o.Special.RoomCount,
                         o.Special.MaxPeopleCapacity,
                         o.Special.ToiletCount
                     } : null,
-                    Availb = o.Availabilities.Select(av=> new
+                    Availabilities = o.Availabilities.Select(a => new
                     {
-                        av.DateIn,
-                        av.DateOut,
+                        a.DateIn,
+                        a.DateOut,
                     }).ToList(),
+
+                    Bookings = o.Bookings.Select(b => new
+                        {
+                            b.DateIn,
+                            b.DateOut,
+                        }).ToList(),
+                        
                 })
                 .FirstOrDefaultAsync();
 
@@ -164,55 +175,60 @@ namespace Examin_backend.Controllers
         public async Task<IActionResult> GetListObjects(string city, DateOnly? dateIn, DateOnly? dateOut, int? guestCount)
         {
             var query = bookingContext.LivingObjects
-                .Include(o => o.ObjectAddresses)
+                .Include(o => o.Address)
                 .Include(o => o.Special)
                 .Include(o => o.Reviews)
-                .Include(o => o.Images) 
-                .Where(o => o.ObjectAddresses.Any(address => address.City == city));
+                .Include(o => o.Images)
+    .           Where(o => o.Address.City == city);
 
             if (guestCount.HasValue)
             {
-                query = query.Where(o => o.Specials.Any(count => count.MaxPeopleCapacity >= guestCount));
+                query = query.Where(o => o.Special.MaxPeopleCapacity >= guestCount);
             }
 
             if (dateIn.HasValue && dateOut.HasValue)
-                //добавить еще проверку на бронирование
             {
-                query = query.Where(o => o.Availabilities.Any(available => available.DateIn <= dateIn && available.DateOut >= dateOut));
+                query = query.Where(o =>
+                    o.Availabilities != null &&
+                    o.Availabilities.Any(a =>
+                        a.DateIn <= dateIn &&   
+                        a.DateOut >= dateOut));  
             }
 
+
+
             var result = await query
-                .Select(o => new
-                {
-                    o.Id,
-                    o.Price,
-                    o.Name,
-                    o.Square,
-                    o.ObjectType,
-                    Reviews = o.Reviews != null ? new
-                    {
-                        o.Reviews.StarsCount,
-                    } : null,
-                    Address = o.ObjectAddresses.Select(a => new
-                    {
-                        a.City,
-                        a.Country,
-                        a.PostalCode,
-                        a.Street,
-                    }).FirstOrDefault(),
-                    Availability = o.Availabilities.Select(av => new
-                    {
-                        av.DateIn,
-                        av.DateOut
-                    }).ToList(),
-                    Special = o.Special != null ? new
-                    {
-                        o.Special.MaxPeopleCapacity,
-                        o.Special.ToiletCount,
-                        o.Special.RoomCount,
-                    } : null,
-                    Photos = o.Images.Select(img => img.ImageUrl).ToList()  
-                }).ToListAsync();
+    .Select(o => new
+    {
+        o.Id,
+        o.Price,
+        o.Name,
+        o.Square,
+        o.ObjectType,
+        Reviews = o.Reviews.Select(re => new
+        {
+           re.StarsCount,
+        }),
+        Address = o.Address != null ? new
+        {
+            o.Address.City,
+            o.Address.Country,
+            o.Address.PostalCode,
+            o.Address.Street,
+        } : null,
+        Availability = o.Availabilities.Select(a => new
+        {
+            a.DateIn,
+            a.DateOut
+        }).ToList(),
+        Special = o.Special != null ? new
+        {
+            o.Special.MaxPeopleCapacity,
+            o.Special.ToiletCount,
+            o.Special.RoomCount,
+        } : null,
+        Photos = o.Images.Select(img => img.ImageUrl).ToList()
+    }).ToListAsync();
 
             if (result == null || !result.Any())
             {
@@ -220,6 +236,7 @@ namespace Examin_backend.Controllers
             }
 
             return Ok(result);
+
         }
 
 
@@ -240,10 +257,9 @@ namespace Examin_backend.Controllers
             try
             {
                 var existingBooking = await bookingContext.Bookings
-                    .Where(b => b.ObjectId == data.ObjectId &&
+                    .Where(b =>  
                                 b.UserId == data.UserId &&
                                 b.OwnerId == data.OwnerId &&
-                                b.ObjectType == data.ObjectType &&
                                 b.DateIn == DateOnly.Parse(data.DateIn) &&
                                 b.DateOut == DateOnly.Parse(data.DateOut) &&
                                 b.TotalPayingSum == data.TotalSum &&
@@ -256,19 +272,18 @@ namespace Examin_backend.Controllers
                 {
                     return Ok( "This booking already exists with the same details." );
                 }
-
                 var booking = new Booking
                 {
-                    ObjectId = data.ObjectId,
                     UserId = data.UserId,
                     OwnerId = data.OwnerId,
-                    ObjectType = data.ObjectType,
                     DateIn = DateOnly.Parse(data.DateIn),
                     DateOut = DateOnly.Parse(data.DateOut),
                     TotalPayingSum = data.TotalSum,
                     TotalDayCount = data.Days,
                     TotalNightCount = data.Night,
-                    Guests = data.Guest
+                    Guests = data.Guest,
+                    ObjectId = data.ObjectId
+                    
                 };
 
                 bookingContext.Bookings.Add(booking);
@@ -281,7 +296,213 @@ namespace Examin_backend.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
+        public bool ConvertToBool(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return false;
 
+            value = value.Trim().ToLower();
+            return value == "yes";
+        }
+
+        [HttpGet("generate-sas-url")]
+        public IActionResult GenerateSasUrl(string blobName)
+        {
+            try
+            {
+                var decodedBlobName = System.Net.WebUtility.UrlDecode(blobName);
+
+                var blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=bookingimages;AccountKey=8RrCkdhDQG4J+vWYlCxG/9MHO+Xq8/UKDGd13HP0+qMmyRO1VA5GIVqHkntVtS4GwI8bTolTlhKc+AStFfjnAg==;EndpointSuffix=core.windows.net");
+                var containerClient = blobServiceClient.GetBlobContainerClient("images-container");
+                var blobClient = containerClient.GetBlobClient(decodedBlobName);
+
+                var sasBuilder = new BlobSasBuilder
+                {
+                    BlobContainerName = "images-container",
+                    BlobName = decodedBlobName,
+                    Resource = "b",   
+                    ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+                };
+
+                sasBuilder.SetPermissions(BlobSasPermissions.Read | BlobSasPermissions.Write);  
+
+                var sasToken = sasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(blobServiceClient.AccountName, "8RrCkdhDQG4J+vWYlCxG/9MHO+Xq8/UKDGd13HP0+qMmyRO1VA5GIVqHkntVtS4GwI8bTolTlhKc+AStFfjnAg==")).ToString();
+                var sasUrl = blobClient.Uri + "?" + sasToken;
+
+                return Ok(new { sasUrl });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+
+        [HttpPost("add")]
+        public async Task<IActionResult> AddNewObject([FromBody] NewObject data)
+        {
+            Console.WriteLine($"Data is {data.Description}");
+
+            Console.WriteLine($"Data is {data}");
+
+            if (data == null)
+            {
+                return BadRequest("Данные не были переданы.");
+            }
+
+            try
+            {
+                var address = new ObjectAddress
+                {
+                    City = data.City,
+                    PostalCode = data.PostalCode,
+                    Country = data.Country,
+                    Street = data.Street + " " + data.StreetNumber,
+                };
+                bookingContext.ObjectAddresses.Add(address);
+
+                var specials = new Special
+                {
+                    Floor = data.Floor,
+                    RoomCount = data.RoomCount,
+                    MaxPeopleCapacity = data.MaxCapacity,
+                    ToiletCount = data.ToiletCount,
+                    ParkingInfo = data.Parking,
+                    TotalSquare = data.Square,
+                    RoomType = data.RoomType,
+                };
+                bookingContext.Specials.Add(specials);
+
+                await bookingContext.SaveChangesAsync();
+
+                int specialId = specials.Id;
+                int addressId = address.Id;
+
+                var livingObject = new LivingObject
+                {
+                    Description = data.Description,
+                    ObjectType = data.ListingType,
+                    Name = data.Name,
+                    AddressId = addressId,
+                    OwnerId = data.OwnerId,
+                    SpecialId = specialId,
+                    Price = data.Price,
+                    Square = data.Square,
+                };
+                bookingContext.LivingObjects.Add(livingObject);
+
+                await bookingContext.SaveChangesAsync();
+
+                int objectId = livingObject.Id;
+
+                if (data.ImageUrls != null && data.ImageUrls.Any())
+                {
+                    foreach (var imageUrl in data.ImageUrls)
+                    {
+                        var newImage = new Image
+                        {
+                            ObjectId = objectId,         
+                            ObjectType = data.ListingType,
+                            ImageUrl = imageUrl         
+                        };
+                        bookingContext.Images.Add(newImage);
+                    }
+                    await bookingContext.SaveChangesAsync();
+                }
+
+
+                if (data.Book != null && data.Book.Any())
+                {
+                    foreach (var availability in data.Book)
+                    {
+                        try
+                        {
+                            var dateIn = DateOnly.Parse(availability.DateIn);
+                            var dateOut = DateOnly.Parse(availability.DateOut);
+
+                            var newAvailability = new Availability
+                            {
+                                ObjectId = objectId,
+                                DateIn = dateIn,
+                                DateOut = dateOut,
+                                UserId = data.OwnerId
+                            };
+                            bookingContext.Availabilities.Add(newAvailability);
+                        }
+                        catch (Exception ex)
+                        {
+                            return BadRequest($"Ошибка преобразования даты: {ex.Message}");
+                        }
+                    }
+                    await bookingContext.SaveChangesAsync();
+                }
+                
+                switch (data.ListingType)
+                {
+                    case "Flat":
+                        var flatInfo = new FlatInfo
+                        {
+                            ObjectId = objectId,
+                            FlatNumber = data.FlatNumber,
+                            IsBalcon = ConvertToBool(data.Balcon),
+                            DoorCode = data.DoorCode,
+                            HowToGetKey = data.GetKey,
+                        };
+                        bookingContext.FlatInfos.Add(flatInfo);
+                        break;
+
+                    case "House":
+                        var houseInfo = new HouseInfo
+                        {
+                            ObjectId = objectId,
+                            IsPoolInclude = ConvertToBool(data.Pool),
+                            IsGarage = ConvertToBool(data.Garage),
+                            HowToGetKey = data.GetKey,
+                            FloatCount = data.FloorCount,
+                        };
+                        bookingContext.HouseInfos.Add(houseInfo);
+                        break;
+
+                    case "Hotel":
+                        var hotelInfo = new HotelInfo
+                        {
+                            ObjectId = objectId,
+                            IsTransferInclude = ConvertToBool(data.IsTransfer),
+                            RoomNumber = data.RoomNumber,
+                        };
+                        bookingContext.HotelInfos.Add(hotelInfo);
+                        break;
+
+                    case "Hostel":
+                        var hostelInfo = new HostelInfo
+                        {
+                            ObjectId = objectId,
+                            PeopleInRoom = data.PeopleInRoom,
+                            RoomNumber = data.RoomNumber,
+                            ForWho = data.ForWho,
+                        };
+                        bookingContext.HostelInfos.Add(hostelInfo);
+                        break;
+
+                    default:
+                        return BadRequest("Неопределённый тип объекта.");
+                }
+                var userObj = new UserObj
+                {
+                    ObjectId = objectId,
+                    UserId = data.OwnerId,
+                };
+                bookingContext.UserObjs.Add(userObj);
+                await bookingContext.SaveChangesAsync();
+
+                return Ok(new { Message = "Объект успешно создан!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Ошибка.", Details = ex.Message });
+            }
+        }
 
 
 

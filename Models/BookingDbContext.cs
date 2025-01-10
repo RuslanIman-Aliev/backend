@@ -65,11 +65,10 @@ public partial class BookingDbContext : DbContext
 
             entity.ToTable("Availability");
 
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
-
             entity.HasOne(d => d.Object).WithMany(p => p.Availabilities)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_Availability_ObjectId");
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Availability_LivingObject");
 
             entity.HasOne(d => d.User).WithMany(p => p.Availabilities)
                 .HasForeignKey(d => d.UserId)
@@ -82,11 +81,10 @@ public partial class BookingDbContext : DbContext
 
             entity.ToTable("Booking");
 
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
-
             entity.HasOne(d => d.Object).WithMany(p => p.Bookings)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_Booking_ObjectId");
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Booking_LivingObject");
 
             entity.HasOne(d => d.Owner).WithMany(p => p.BookingOwners)
                 .HasForeignKey(d => d.OwnerId)
@@ -142,11 +140,10 @@ public partial class BookingDbContext : DbContext
             entity.Property(e => e.DoorCode).HasMaxLength(50);
             entity.Property(e => e.FlatNumber).HasMaxLength(20);
             entity.Property(e => e.HowToGetKey).HasMaxLength(100);
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
 
             entity.HasOne(d => d.Object).WithMany(p => p.FlatInfos)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_FlatInfo_ObjectId");
+                .HasConstraintName("FK_Apartment_LivingObject");
         });
 
         modelBuilder.Entity<HostelInfo>(entity =>
@@ -156,11 +153,10 @@ public partial class BookingDbContext : DbContext
             entity.ToTable("HostelInfo");
 
             entity.Property(e => e.ForWho).HasMaxLength(50);
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
 
             entity.HasOne(d => d.Object).WithMany(p => p.HostelInfos)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_HostelInfo_ObjectId");
+                .HasConstraintName("FK_Hostel_LivingObject");
         });
 
         modelBuilder.Entity<HotelInfo>(entity =>
@@ -169,11 +165,9 @@ public partial class BookingDbContext : DbContext
 
             entity.ToTable("HotelInfo");
 
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
-
             entity.HasOne(d => d.Object).WithMany(p => p.HotelInfos)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_HotelInfo_ObjectId");
+                .HasConstraintName("FK_Hotel_LivingObject");
         });
 
         modelBuilder.Entity<HouseInfo>(entity =>
@@ -183,11 +177,10 @@ public partial class BookingDbContext : DbContext
             entity.ToTable("HouseInfo");
 
             entity.Property(e => e.HowToGetKey).HasMaxLength(100);
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
 
             entity.HasOne(d => d.Object).WithMany(p => p.HouseInfos)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_HouseInfo_ObjectId");
+                .HasConstraintName("FK_House_LivingObject");
         });
 
         modelBuilder.Entity<Image>(entity =>
@@ -223,8 +216,6 @@ public partial class BookingDbContext : DbContext
 
             entity.ToTable("LivingObject");
 
-            entity.Property(e => e.ContactEmail).HasMaxLength(100);
-            entity.Property(e => e.ContactNumber).HasMaxLength(25);
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.ObjectType).HasMaxLength(50);
 
@@ -232,41 +223,9 @@ public partial class BookingDbContext : DbContext
                 .HasForeignKey(d => d.AddressId)
                 .HasConstraintName("FK_Object_AddressId");
 
-            entity.HasOne(d => d.Availability).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.AvailabilityId)
-                .HasConstraintName("FK_Object_AvailabilityId");
-
-            entity.HasOne(d => d.Booking).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.BookingId)
-                .HasConstraintName("FK_Object_BookingId");
-
-            entity.HasOne(d => d.Flat).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.FlatId)
-                .HasConstraintName("FK_Object_FlatId");
-
-            entity.HasOne(d => d.Hostel).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.HostelId)
-                .HasConstraintName("FK_Object_HostelId");
-
-            entity.HasOne(d => d.Hotel).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.HotelId)
-                .HasConstraintName("FK_Object_HotelId");
-
-            entity.HasOne(d => d.House).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.HouseId)
-                .HasConstraintName("FK_Object_HouseId");
-
-            entity.HasOne(d => d.Image).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.ImageId)
-                .HasConstraintName("FK_Object_ImageId");
-
             entity.HasOne(d => d.Owner).WithMany(p => p.LivingObjects)
                 .HasForeignKey(d => d.OwnerId)
                 .HasConstraintName("FK_Object_OwnerId");
-
-            entity.HasOne(d => d.Reviews).WithMany(p => p.LivingObjects)
-                .HasForeignKey(d => d.ReviewsId)
-                .HasConstraintName("FK_Object_ReviewsId");
 
             entity.HasOne(d => d.Special).WithMany(p => p.LivingObjects)
                 .HasForeignKey(d => d.SpecialId)
@@ -279,14 +238,9 @@ public partial class BookingDbContext : DbContext
 
             entity.Property(e => e.City).HasMaxLength(50);
             entity.Property(e => e.Country).HasMaxLength(50);
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
             entity.Property(e => e.PostalCode).HasMaxLength(10);
             entity.Property(e => e.State).HasMaxLength(50);
             entity.Property(e => e.Street).HasMaxLength(100);
-
-            entity.HasOne(d => d.Object).WithMany(p => p.ObjectAddresses)
-                .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_ObjectAddresses_ObjectId");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -318,9 +272,10 @@ public partial class BookingDbContext : DbContext
 
             entity.Property(e => e.ObjectType).HasMaxLength(50);
 
-            entity.HasOne(d => d.Object).WithMany(p => p.ReviewsNavigation)
+            entity.HasOne(d => d.Object).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_Reviews_ObjectId");
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Reviews_LivingObject");
 
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.UserId)
@@ -333,17 +288,8 @@ public partial class BookingDbContext : DbContext
 
             entity.ToTable("Special");
 
-            entity.Property(e => e.ObjectType).HasMaxLength(50);
             entity.Property(e => e.ParkingInfo).HasMaxLength(100);
             entity.Property(e => e.RoomType).HasMaxLength(50);
-
-            entity.HasOne(d => d.Address).WithMany(p => p.Specials)
-                .HasForeignKey(d => d.AddressId)
-                .HasConstraintName("FK_Special_AddressId");
-
-            entity.HasOne(d => d.Object).WithMany(p => p.Specials)
-                .HasForeignKey(d => d.ObjectId)
-                .HasConstraintName("FK_Special_ObjectId");
         });
 
         modelBuilder.Entity<User>(entity =>

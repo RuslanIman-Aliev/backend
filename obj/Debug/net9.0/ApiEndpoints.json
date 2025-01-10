@@ -29,6 +29,32 @@
   },
   {
     "ContainingType": "Examin_backend.Controllers.ObjectsController",
+    "Method": "ConvertToBool",
+    "RelativePath": "api/Objects",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "value",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.ObjectsController",
     "Method": "GetObjectById",
     "RelativePath": "api/Objects/{id}",
     "HttpMethod": "GET",
@@ -38,6 +64,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.ObjectsController",
+    "Method": "AddNewObject",
+    "RelativePath": "api/Objects/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Examin_backend.Class.NewObject",
         "IsRequired": true
       }
     ],
@@ -55,6 +97,22 @@
         "Name": "data",
         "Type": "Examin_backend.Class.BookingDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Examin_backend.Controllers.ObjectsController",
+    "Method": "GenerateSasUrl",
+    "RelativePath": "api/Objects/generate-sas-url",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blobName",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
