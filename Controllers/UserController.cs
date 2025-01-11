@@ -27,16 +27,26 @@ namespace Examin_backend.Controllers
         [HttpPost("signUp")]
         public async Task<IActionResult> SignUp([FromBody] User user)
         {
-            var userUnique = await _context.Users.FirstOrDefaultAsync(u => u.Login == user.Login);
-            if (userUnique != null)
+            if (user == null) return BadRequest("Invalid user data.");
+
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email || u.Login == user.Login);
+            if (existingUser != null)
             {
-                return Conflict("User already exists");
+                return Conflict(new { message = "Email or Login already exists." });
             }
 
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return Ok("User successfully registered");
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "User registered successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while saving the user.", details = ex.Message });
+            }
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] User user)
@@ -130,17 +140,29 @@ namespace Examin_backend.Controllers
         }
 
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            var refreshToken = Request.Cookies["RefreshToken"];
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+                if (user != null)
+                {
+                    user.RefreshToken = null;
+                    user.RefreshTokenExpiryTime = null;
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             Response.Cookies.Delete("AccessToken");
             Response.Cookies.Delete("RefreshToken");
 
             return Ok("Logged out successfully");
         }
+
         [EnableCors("AllowSpecificOrigin")]
         [HttpGet("check-auth")]
         public IActionResult CheckAuth()
-
         {
             var token = Request.Cookies["AccessToken"];
             if (string.IsNullOrEmpty(token))
@@ -163,14 +185,37 @@ namespace Examin_backend.Controllers
             try
             {
                 tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
-                return Ok("User is authenticated");
-            }
-            catch (Exception)
-            {
-                return Unauthorized("Invalid token");
-            }
 
+                var jwtToken = validatedToken as JwtSecurityToken;
+                if (jwtToken == null)
+                {
+                    return Unauthorized("Invalid token format");
+                }
+
+                var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized("Invalid token payload");
+                }
+
+                var user = _context.Users.FirstOrDefault(u => u.Id == int.Parse(userId));
+                if (user == null || string.IsNullOrEmpty(user.RefreshToken))
+                {
+                    return Unauthorized("Session expired or user not found");
+                }
+
+                return Ok(new { message = "User is authenticated", userId });
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                return Unauthorized("Token has expired");
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized($"Invalid or expired token: {ex.Message}");
+            }
         }
+
 
 
 
@@ -216,21 +261,53 @@ namespace Examin_backend.Controllers
 
             return Ok(user);
         }
-        [HttpGet("GetUsersObject")]
+        [HttpGet("GetUsersObject/{id}")]
         public async Task<IActionResult> GetUsersObject(int id)
         {
-            var user = await _context.Users.Include(u=>u.UserObjs).ThenInclude(uo=>uo.Object).FirstAsync(user=>user.Id == id);
+            var user = await _context.Users
+                .Include(u => u.LivingObjects)
+                    .ThenInclude(lo => lo.Images)
+                .Include(u => u.LivingObjects)
+                    .ThenInclude(lo => lo.Address)   
+                .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
             {
                 return NotFound("User not found");
             }
 
-            var objects = user.UserObjs.Select(uo => uo.Object).ToList();
+            var objects = user.LivingObjects
+                .Where(lo => lo != null)
+                .Select(lo => new
+                {
+                    lo.Id,
+                    lo.Name,
+                    lo.Description,
+                    lo.Price,
+                    lo.Square,
+                    lo.ObjectType,
+                    Images = lo.Images
+                        .Where(img => img != null)
+                        .Select(img => new
+                        {
+                            img.Id,
+                            img.ImageUrl
+                        })
+                        .ToList(),
+                    Address = lo.Address != null ? new
+                    {
+                        lo.Address.Street,
+                        lo.Address.City,
+                        lo.Address.State,
+                        lo.Address.PostalCode,
+                        lo.Address.Country
+                    } : null
+                })
+                .ToList();
 
             return Ok(objects);
         }
-        // роль пользователя 
+
         [HttpGet("GetUserRole")]
         public async Task<IActionResult> GetUserRole(int id)
         {
@@ -243,18 +320,88 @@ namespace Examin_backend.Controllers
             var role = user.UserRoles.Select(uo => uo.RoleName).ToList();
             return Ok(role);
         }
-        [HttpGet("GetUserBookings")]
+        [HttpGet("getUserBookObject/{id}")]
+        public async Task<IActionResult> GetUserBookObject(int id)
+        {
+            var ownerObjects = await _context.LivingObjects
+                .Include(lo => lo.Bookings)
+                .Where(lo => lo.OwnerId == id)
+                .ToListAsync();
+
+            if (!ownerObjects.Any())
+            {
+                return NotFound("No objects found for this owner.");
+            }
+
+            var bookings = ownerObjects
+                .Where(lo => lo.Bookings.Any())
+                .Select(lo => new
+                {
+                    ObjectId = lo.Id,
+                    ObjectName = lo.Name,
+                    Bookings = lo.Bookings.Select(b => new
+                    {
+                        b.Id,
+                        b.DateIn,
+                        b.DateOut,
+                        b.TotalDayCount,
+                        b.TotalNightCount,
+                        b.Guests,
+                        b.TotalPayingSum
+                    }).ToList()
+                })
+                .ToList();
+
+            if (!bookings.Any())
+            {
+                return NotFound("No bookings found for this owner.");
+            }
+
+            return Ok(bookings);
+        }
+
+
+        [HttpGet("GetUserBookings/{id}")]
         public async Task<IActionResult> GetUserBookings(int id)
         {
-            var user = await _context.Users.Include(r => r.BookingUsers).FirstOrDefaultAsync(user => user.Id == id);
+            var user = await _context.Users
+                .Include(u => u.BookingUsers)
+                .ThenInclude(b => b.Object)  
+                .FirstOrDefaultAsync(u => u.Id == id);
+
             if (user == null)
             {
                 return NotFound("User not found");
             }
 
-            var bookings = user.BookingUsers.Select(u=>u).ToList();
+            var bookings = user.BookingUsers
+                .Where(b => b != null)
+                .Select(b => new
+                {
+                    b.Id,
+                    b.UserId,
+                    b.OwnerId,
+                    b.DateIn,
+                    b.DateOut,
+                    b.TotalDayCount,
+                    b.TotalNightCount,
+                    b.TotalPayingSum,
+                    b.Guests,
+                    b.ObjectId,
+                    LivingObject = b.Object != null ? new
+                    {
+                        b.Object.Name,
+                        b.Object.Price,
+                        b.Object.Id,
+                    } : null
+                })
+                .ToList();
+
             return Ok(bookings);
         }
+
+
+
         [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser()
         {
@@ -286,7 +433,16 @@ namespace Examin_backend.Controllers
             });
         }
 
+        [HttpGet("check-role")]
+        public async Task<IActionResult> CheckUserRole()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+            var isAdmin = await _context.UserRoles
+                .AnyAsync(ur => ur.UserId == userId && ur.RoleName == "Admin");
+
+            return Ok(new { IsAdmin = isAdmin });
+        }
     }
 
 }

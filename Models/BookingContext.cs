@@ -290,8 +290,6 @@ public partial class BookingContext : DbContext
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.Phone, "UQ__User__5C7E359E2B95F625").IsUnique();
-
             entity.HasIndex(e => e.Email, "UQ__User__A9D10534328EA451").IsUnique();
 
             entity.Property(e => e.Email).HasMaxLength(100);
@@ -299,7 +297,6 @@ public partial class BookingContext : DbContext
             entity.Property(e => e.LoginDate).HasColumnType("datetime");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(50);
-            entity.Property(e => e.Phone).HasMaxLength(15);
             entity.Property(e => e.Surname).HasMaxLength(50);
             entity.Property(e => e.WalletAddress).HasMaxLength(100);
         });

@@ -10,6 +10,7 @@ using Azure.Core.GeoJson;
 using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
 using Azure.Storage;
+using System.Security.Claims;
 
 namespace Examin_backend.Controllers
 {
@@ -78,6 +79,7 @@ namespace Examin_backend.Controllers
                     o.ObjectType,
                     o.Price,
                     o.Square,
+                    o.Name,
                     Reviews = o.Reviews.Select(re => new
                     {
                         re.StarsCount,
@@ -86,6 +88,7 @@ namespace Examin_backend.Controllers
                     {
                         o.Address.Street,
                         o.Address.City,
+                        o.Address.Country,
                         o.Address.PostalCode
                     } : null,
                     Special = o.Special != null ? new
@@ -130,6 +133,7 @@ namespace Examin_backend.Controllers
                     o.ObjectType,
                     o.Price,
                     o.Name,
+                    o.Square,
                     o.Description,
                     o.OwnerId,
                     Reviews = o.Reviews.Select(re => new
@@ -178,8 +182,7 @@ namespace Examin_backend.Controllers
                 .Include(o => o.Address)
                 .Include(o => o.Special)
                 .Include(o => o.Reviews)
-                .Include(o => o.Images)
-    .           Where(o => o.Address.City == city);
+                .Include(o => o.Images).Where(o => o.Address.City == city);
 
             if (guestCount.HasValue)
             {
@@ -288,7 +291,18 @@ namespace Examin_backend.Controllers
 
                 bookingContext.Bookings.Add(booking);
                 await bookingContext.SaveChangesAsync();
+                var bookingId = booking.Id;
+                var payments = new Payment
+                {
+                    BookingId = bookingId,
+                    FromUserId = data.UserId,
+                    ToUserId = data.OwnerId,
+                    PaymentMethod = "Crypto",
+                    PaymentTransaction = data.Hash
 
+                };
+                bookingContext.Payments.Add(payments);
+                await bookingContext.SaveChangesAsync();
                 return Ok(new { Message = "Booking created successfully!" });
             }
             catch (Exception ex)
@@ -504,7 +518,82 @@ namespace Examin_backend.Controllers
             }
         }
 
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteObject(int id)
+        {
+            var livingObject = await bookingContext.LivingObjects.FindAsync(id);
 
+            if (livingObject == null)
+            {
+                return NotFound();
+            }
+
+            var relatedFlats = bookingContext.FlatInfos.Where(f => f.ObjectId == id);
+            bookingContext.FlatInfos.RemoveRange(relatedFlats);
+
+            var relatedAvailabilities = bookingContext.Availabilities.Where(a => a.ObjectId == id);
+            bookingContext.Availabilities.RemoveRange(relatedAvailabilities);
+
+            var relatedHotels = bookingContext.HotelInfos.Where(h => h.ObjectId == id);
+            bookingContext.HotelInfos.RemoveRange(relatedHotels);
+
+            var relatedHouses = bookingContext.HouseInfos.Where(h => h.ObjectId == id);
+            bookingContext.HouseInfos.RemoveRange(relatedHouses);
+
+            var relatedHostels = bookingContext.HostelInfos.Where(h => h.ObjectId == id);
+            bookingContext.HostelInfos.RemoveRange(relatedHostels);
+
+            bookingContext.LivingObjects.Remove(livingObject);
+
+            await bookingContext.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet("all-bookings")]
+        public async Task<IActionResult> GetAllBookings([FromQuery] int userId)
+        {
+            var isAdmin = await bookingContext.UserRoles
+                .AnyAsync(ur => ur.UserId == userId && ur.RoleName == "Admin");
+
+            if (!isAdmin)
+            {
+                return Forbid("You do not have permission to access this resource.");
+            }
+
+            var livingObjectsWithBookings = await bookingContext.LivingObjects
+                .Include(lo => lo.Bookings)  
+                .ThenInclude(b => b.User)   
+                .Select(lo => new
+                {
+                    ObjectId = lo.Id,
+                    ObjectName = lo.Name,
+                    ObjectPrice = lo.Price,
+                    Bookings = lo.Bookings.Select(b => new
+                    {
+                        BookingId = b.Id,
+                        User = b.User != null ? new
+                        {
+                            b.User.Id,
+                            b.User.Name,
+                            b.User.Email
+                        } : null,
+                        b.DateIn,
+                        b.DateOut,
+                        b.TotalPayingSum,
+                        b.Guests
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            if (livingObjectsWithBookings == null || !livingObjectsWithBookings.Any())
+            {
+                return NotFound("No living objects or bookings found.");
+            }
+
+            return Ok(livingObjectsWithBookings);
+        }
 
     }
 }
